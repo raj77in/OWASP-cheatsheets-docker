@@ -23,7 +23,7 @@ LABEL org.opencontainers.image.maintainer="Amit Agarwal"     \
 #      org.opencontainers.image.created="2020-05-01T01:01:01.01Z"
 
 WORKDIR /app
-RUN dnf update -y; dnf install -y make unzip python3-pip ; dnf clean all -y
+RUN dnf update -y; dnf install -y make unzip python3-pip gcc ; dnf clean all -y
 ADD https://github.com/OWASP/CheatSheetSeries/archive/refs/heads/master.zip /app
 RUN chown -R 1001 /app
 RUN alternatives --install /usr/bin/python python /usr/bin/python3 1
