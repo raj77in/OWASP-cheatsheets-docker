@@ -26,7 +26,7 @@ WORKDIR /app
 RUN dnf update -y; dnf install -y make unzip python3-pip ; dnf clean all -y
 ADD https://github.com/OWASP/CheatSheetSeries/archive/refs/heads/master.zip /app
 RUN chown -R 1001 /app
-RUN alternatives --install /usr/bin/python python /usr/bin/python3.11 1
+RUN alternatives --install /usr/bin/python python /usr/bin/python3
 RUN unzip master.zip
 ENV PATH=/root/.local/bin:$PATH
 WORKDIR /app/CheatSheetSeries-master/
