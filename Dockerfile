@@ -22,13 +22,14 @@ LABEL org.opencontainers.image.maintainer="Amit Agarwal"     \
 #      org.opencontainers.image.revision="" FROM git
 #      org.opencontainers.image.created="2020-05-01T01:01:01.01Z"
 
-WORKDIR /app
-RUN dnf update -y; dnf install -y make unzip python3-pip gcc ; dnf clean all -y
-ADD https://github.com/OWASP/CheatSheetSeries/archive/refs/heads/master.zip /app
-RUN chown -R 1001 /app
+RUN dnf update -y; dnf install -y make unzip python3-pip gcc python3-virtualenv ; dnf clean all -y
 RUN alternatives --install /usr/bin/python python /usr/bin/python3 1
-RUN unzip master.zip
-ENV PATH=/root/.local/bin:$PATH
+RUN useradd -ms /bin/bash -d /app owasp
+ADD https://github.com/OWASP/CheatSheetSeries/archive/refs/heads/master.zip /app
+RUN chown -R owasp /app
+USER owasp
+RUN cd /app; unzip master.zip
+ENV PATH=$HOME/.local/bin:$PATH
 WORKDIR /app/CheatSheetSeries-master/
 RUN echo install python pre-req ; make install-python-requirements
 RUN echo make site; make generate-site
